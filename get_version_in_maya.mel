@@ -1,0 +1,21 @@
+global proc string temp_get_current_path() 
+{
+  string $melPath = `whatIs "temp_get_current_path"`;
+  string $path = `match "[^ ]*$" $melPath`;
+  return(dirname($path));
+}
+
+proc run_me()
+{
+  string $current_path = temp_get_current_path();
+  
+  python("import sys");
+  python("sys.path.append('" + $current_path + "')"); 
+  
+  python("import get_maya_data");
+	python("get_maya_data.main()");
+
+  quit -force;
+}
+
+run_me();
